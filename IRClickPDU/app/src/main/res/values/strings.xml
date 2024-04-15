@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">IR.ClickPDU Remote v0.0.2</string>
+    <string name="power_off">Power</string>
+</resources>
