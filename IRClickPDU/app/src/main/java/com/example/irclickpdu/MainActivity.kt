@@ -63,17 +63,26 @@ class MainActivity : AppCompatActivity() {
     fun sendNECIRSignal(context: Context, pattern: IntArray) {
 
         // Check if the device supports ConsumerIrManager
-        val irManager = context.getSystemService(Context.CONSUMER_IR_SERVICE) as? ConsumerIrManager
+        val irManager = context.getSystemService(Context.CONSUMER_IR_SERVICE) as ConsumerIrManager?
 
         if (irManager != null && irManager.hasIrEmitter()) {
+            // Get the supported carrier frequencies
+            val carrierFrequencies = irManager.getCarrierFrequencies()
+
+            // Choose a carrier frequency (for example, the first one)
+            val frequency = carrierFrequencies?.get(0)?.minFrequency ?: return
+
             // Transmit the IR signal with the NEC protocol
-            irManager.transmit(NEC_FREQUENCY, pattern)
+            irManager.transmit(frequency, pattern)
             Toast.makeText(this, "PEW PEW", Toast.LENGTH_SHORT).show()
         } else {
             // Device does not support IR emitter or ConsumerIrManager
             // Handle this case accordingly
             Toast.makeText(this, "TRANSMITTER IS NOT AVAILABLE", Toast.LENGTH_SHORT).show()
         }
+
+
+
     }
     private fun vibrateShort(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -85,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 // Vibrate for a short duration
                 vibrator.vibrate(
                     VibrationEffect.createOneShot(
-                        100,
+                        50,
                         VibrationEffect.DEFAULT_AMPLITUDE
                     )
                 )
@@ -95,8 +104,6 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun powerClick(code: String) {
-        // Show a toast message with the input string
-        Toast.makeText(this, code, Toast.LENGTH_SHORT).show()
         vibrateShort(this)
 
         val systemCode = 0x00FF
