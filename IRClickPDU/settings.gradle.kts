@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IR.ClickPDU"
+rootProject.name = "I.R.Clickpdu"
 include(":app")
  
