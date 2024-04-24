@@ -49,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         IRController irController = new IRController(getApplicationContext());
         irController.sendMessage(new IRMessageRequest(msg));
 
-        showToast(cmd + " sent to " + addr);
+        if (irController.isEnabled()) {
+            showToast(cmd + " sent to " + addr);
+        } else {
+            showToast("Transmitter is not available");
+        }
     }
 
     // Helper method to show a toast message

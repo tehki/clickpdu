@@ -23,6 +23,7 @@ public class IRController extends Thread
     private Object _messageLock = new Object();
     private Queue<IRMessageRequest> _messageQueue = new LinkedList<IRMessageRequest>();
 
+    public boolean isEnabled() { return _enabled; }
     public IRController(Context context)
     {
         _context = context;
